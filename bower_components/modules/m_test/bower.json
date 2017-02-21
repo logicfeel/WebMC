@@ -1,0 +1,17 @@
+{
+  "name": "m_test",
+  "homepage": "https://github.com/logicfeel/WebMC",
+  "authors": [
+    "logicfeel <logicfeel@nate.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

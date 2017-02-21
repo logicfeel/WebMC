@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>List </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <!--<script src="jquery.js"></script>-->
+    <script>
+    function g_func() {
+        alert('g_func');
+    }
+    </script>
+</head>
+<body>
+
+
+
+
+<template id="temp_test">  
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+
+    <div class="container">
+        <h2>템플릿 목록</h2>
+        <p>샘플목록에 대한 설명 입니다.:</p>            
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody id="table_template" ><!--
+            <tr>
+                <td>{1}</td>
+                <td>{2}</td>
+            </tr>-->
+            </tbody> 
+        </table>
+    </div>
+
+<script>
+
+// (function() {
+//     this.WebMC = {};
+//     this.WebMC.list = {};
+//     // this.WebMC.list.
+// }());
+
+
+/* // 일반 태그 방식
+    onload = function() {
+        $.get("/bower_components/asp_user_list_v.0/default.asp", 
+            function(data, status){
+                //alert("Data: " + data + "\nStatus: " + status);
+                var mylist = document.getElementById("table_template");
+                var templateText  = mylist.firstChild.nodeValue;
+                var jsondata = JSON.parse(data);
+                var temp;
+
+                for(var i = 0; i < jsondata.row.length; i++) {
+                    temp = templateText;
+                    temp = temp.replace("{1}", jsondata.row[i].name);
+                    temp = temp.replace("{2}", jsondata.row[i].count);
+                    mylist.insertAdjacentHTML("beforeend", temp);
+                }
+            }
+        );
+    console.log('list_v.0 :: onload :: -End');
+    }
+*/
+
+</script>
+</template>
+
+<script>
+
+(function (g) {
+    'use strict';
+
+    var XFooPrototype = Object.create(HTMLButtonElement.prototype);
+    XFooPrototype.createdCallback = function() {
+        // this.textContent = " ParentI'm an x-foo!";
+        this.parents = "부모";
+        this.innerHTML = " ParentI'm an x-foo!";
+        // // 1. 템플릿을 붙여봄
+        // var template = document.querySelector('#temp_test');
+        // var clone = document.importNode(template.content, true);
+        // this.appendChild(clone);
+
+        // 1. 템플릿 + 쉐도우 붙여봄
+        // var shadow = template.createShadowRoot();
+        var shadow = this.createShadowRoot();
+        var template = document.querySelector('#temp_test');
+        var clone = document.importNode(template.content, true);
+        
+        shadow.appendChild(clone);
+        console.log('list_v.0 :: onload :: -End'+g_func);
+        // this.appendChild(shadow);
+
+        this.foo();
+        this.onclick = function() {alert('click elem');};
+    };
+    // XFooPrototype.kkk = "KKK";    
+    XFooPrototype.foo = function() {      // 내부 메소드 선언
+        console.log('foo1() called');
+    };
+    //   XFooPrototype.onclick = function() {      // 이벤트 매칭    => 오류 확인 필요
+    //     alert('click elem');
+    //   };
+
+    // 사용자태그 등록
+    var XFoo = document.registerElement('x-xx', {
+        // 'extends': 'div',
+        prototype: XFooPrototype
+    });
+    // document.body.appendChild(new XFoo()); 
+    // g["XFooPrototype"] = XFooPrototype;
+    g.XFooPrototypes = XFooPrototype;         // 상속을 위해 전달할 항목
+    g.XFoos = XFoo;
+
+    }(window));
+</script>
+
+<script>
+(function (g) {
+    'use strict';
+    // var XFooPrototype = Object.create(HTMLElement.prototype);
+    
+    var temp  = document.createElement('x-xx');
+    // var XFooPrototype = Object.create(temp.__proto__);
+    var XFooPrototype = Object.create(temp);
+    // var XFooPrototype = Object.create(XFoos);
+    XFooPrototype.basecreatedCallback = XFooPrototype.__proto__.createdCallback;   // 부모참조 콜백 만듬
+    XFooPrototype.base = XFooPrototype.__proto__;
+
+    // 이부분 넣으면 덮어씀  !해결해야 함
+    XFooPrototype.createdCallback = function() {
+        this.basecreatedCallback();
+        // this.textContent =  "I'm an x-foo!!";
+        // this.innerHTML = " Child x-foo!";
+        this.foo2(); 
+
+        console.log('자식의 callback');
+    };
+    
+    XFooPrototype.foo2 = function() {
+      console.log('foo2() called');
+    };
+
+    var XFoo = document.registerElement('x-xx-foo', {
+            //'extends': 'my-button',
+            // prototype: XFooPrototypes,
+            'extends': 'div',
+            prototype: XFooPrototype
+    });
+
+}(window));
+</script>
+
+    <x-xx>x-xx</x-xx>
+    <x-xx-foo>x-xx-foo</x-xx-foo>
+
+    <div is="x-xx">div is="x-xx"</div>
+    <div is="x-xx-foo">div is="x-xx-foo"</div>
+
+    <!--<button is="x-xx-foo">x</button>-->
+
+ <input type="date" name="startDate" id="start">
+
+<script>
+    // // 샘플뷰
+    // var template = document.querySelector('template');
+    // var clone = document.importNode(template.content, true);
+    // document.querySelector('body').appendChild(clone);
+    
+    console.log('list_v.0 :: onload :: -End'+g_func);
+</script>
+
+<div id="nameTag">Bob</div>
+
+</body>
+</html>

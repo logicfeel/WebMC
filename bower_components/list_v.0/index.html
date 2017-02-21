@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>List </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <!--<script src="jquery.js"></script>-->
+</head>
+<body>
+<template>  
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+<div class="container">
+    <h2>템플릿 목록</h2>
+    <p>샘플목록에 대한 설명 입니다.:</p>            
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Firstname</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody id="table_template" ><!--
+        <tr>
+            <td>{1}</td>
+            <td>{2}</td>
+        </tr>-->
+        </tbody> 
+    </table>
+</div>
+
+<script>
+
+(function() {
+    this.WebMC = {};
+    this.WebMC.list = {};
+    // this.WebMC.list.
+}());
+
+
+/* // 일반 태그 방식
+    onload = function() {
+        $.get("/bower_components/asp_user_list_v.0/default.asp", 
+            function(data, status){
+                //alert("Data: " + data + "\nStatus: " + status);
+                var mylist = document.getElementById("table_template");
+                var templateText  = mylist.firstChild.nodeValue;
+                var jsondata = JSON.parse(data);
+                var temp;
+
+                for(var i = 0; i < jsondata.row.length; i++) {
+                    temp = templateText;
+                    temp = temp.replace("{1}", jsondata.row[i].name);
+                    temp = temp.replace("{2}", jsondata.row[i].count);
+                    mylist.insertAdjacentHTML("beforeend", temp);
+                }
+            }
+        );
+    console.log('list_v.0 :: onload :: -End');
+    }
+*/
+
+</script>
+</template>
+
+<script>
+    // // 샘플뷰
+    // var template = document.querySelector('template');
+    // var clone = document.importNode(template.content, true);
+    // document.querySelector('body').appendChild(clone);
+</script>
+
+</body>
+</html>
