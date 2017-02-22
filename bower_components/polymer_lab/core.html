@@ -205,7 +205,8 @@
     _Poly.Class = function(struct) {}   // 등록없이 생성만
 
     var a = new _Poly({
-        is: "configurable-name-tag", 
+        is: "configurable-name-tag",
+        // extends: "div" ,
         created : function(){
              this.innerHTML = " _Poly ";
         }
@@ -345,8 +346,9 @@
 
 </template>
 
-<configurable-name-tag></configurable-name-tag>
+<configurable-name-tag>configurable-name-tag</configurable-name-tag>
 
+<div is="configurable-name-tag">div is="configurable-name-tag"</div>
 
 <p>커스텀요소 외부</p>
 </body>
