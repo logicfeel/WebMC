@@ -17,9 +17,18 @@
         - regsiter-element 사용 구조화 호환성
         - 자바스크립트의 기본 문법과의 호환성 (구현은 이쪽으로)
         - Polymer 의 핵심기능 구현
-            + 
+            + 클래스 단계 마무리
     */
     function _Poly(a_struct) {
+        console.log('_Poly inner');
+
+        var regObject = _Poly.Class(a_struct);
+
+        document.registerElement(a_struct.is, regObject); 
+    };
+    _Poly.Class = function(a_struct) {
+        console.log('_Poly.Class inner');
+
         var struct = { 
             is: "",                     // 템플릿 is 이름 지정
             extends: "",                // 기본 요소 확장
@@ -103,19 +112,9 @@
         
         
         // 사용자 요소 등록
-        document.registerElement(struct.is, regObject); 
-        // // 4. 쉐도우에 서크텀 붙이기
-        // // 커스텀 요소
-        // var XFooProto = Object.create(HTMLElement.prototype); 
-        // XFooProto.createdCallback = function() { 
-        //     this.innerHTML = "I'm an x-foo-mark!  보여~"; 
-        // }; 
-        // var XFoo = document.registerElement('x-foo-mark', {prototype: XFooProto}); 
-        // // 쉐도우에 붙이기
-        // var shadow = document.querySelector('#nameTag').createShadowRoot();
-        // var elem = document.createElement('x-foo-mark');
-        // shadow.appendChild(elem);  
-        console.log('_Polyinner');
+        // document.registerElement(struct.is, regObject); 
+        
+        return regObject;
     }
     _Poly.prototype = {
         // 선택 & 이벤트     
@@ -183,15 +182,28 @@
             attachedCallback()
             arrayDelete(path, item) ➙ Array
         */
-    };
-    _Poly.Class = function(struct) {}   // 등록없이 생성만
-    var a = new _Poly({
+    };   // 등록없이 생성만
+    
+    
+    var a = _Poly({
         is: "configurable-name-tag",
         // extends: "div" ,
         created : function(){
              this.innerHTML = " _Poly ";
         }
     });
+
+    var parent = _Poly.Class({
+        is: "configurable-name-tag",
+        // extends: "div" ,
+        created : function(){
+             this.innerHTML = " _Poly ";
+        }
+    });
+
+    
+
+
 </script>
 
 <template id="configurable-name-tag">

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <!--<script src="jquery.js"></script>-->
     <script>
+
     </script>
 </head>
 <body>
@@ -19,104 +20,22 @@
         - Polymer 의 핵심기능 구현
             + 
     */
+
     function _Poly(a_struct) {
-        var struct = { 
-            is: "",                     // 템플릿 is 이름 지정
-            extends: "",                // 기본 요소 확장
-            hostAttributes: "",         // 정적 속성                
-            // 속성 : type, value, reflectToAttribute, readOnly, notify, computed, observer
-            // 단방향 : [[]], 양방향 {{}}
-            properties: "",             // 속성
-            behavisors: "",             // 확장
-            listeners: "",              // 이벤트 매핑
-            
-            // Polymer.Base
-            customStyle: "",
-            domHost: "",
-                
-            // 라이프 사이클
-            created: function() {},             // createdCallback : 요소 생성후 속성 설정전, 1회호출
-            ready: function() {},               // 요소 생성후 속성 호출후, 1회호출
-            attached: function() {},            // attachedCallback : 여러번호출
-            attributeChanged: function() {},    // attributeChangedCallback : 속성값 변경시
-            detached: function() {},            // detachedCallback : 요소 분리 후 호출, 여러번호출
-                
-            // 생성자 
-            factoryImpl: function() {}
-        }
-        var LightDOM = {
-        /* listDOM 관련 메소드
-            // 자식 추가 및 삭제
-            Polymer.dom(parent).appendChild(node)
-            Polymer.dom(parent).insertBefore(node, beforeNode)
-            Polymer.dom(parent).removeChild(node)
-            Polymer.dom.flush()
-            // 부모 하위
-            Polymer.dom(parent).childNodes
-            Polymer.dom(parent).children
-            Polymer.dom(node).parentNode
-            Polymer.dom(node).firstChild
-            Polymer.dom(node).lastChild
-            Polymer.dom(node).firstElementChild
-            Polymer.dom(node).lastElementChild
-            Polymer.dom(node).previousSibling
-            Polymer.dom(node).nextSibling
-            Polymer.dom(node).textContent
-            Polymer.dom(node).innerHTML
-            // 퀴리 선택기
-            Polymer.dom(parent).querySelector(selector)
-            Polymer.dom(parent).querySelectorAll(selector)
-            // 콘텐츠 
-            Polymer.dom(contentElement).getDistributedNodes()
-            Polymer.dom(node).getDestinationInsertionPoints()
-            // 노드변경
-            Polymer.dom(node).setAttribute(attribute, value)
-            Polymer.dom(node).removeAttribute(attribute)
-            Polymer.dom(node).classList
-        */
-        }
-        var protoObj = Object.create(HTMLElement.prototype);
+        console.log('_Poly inner');
+
+        var protoObj = _Poly.Class(a_struct);
+
         var regObject = {
             extends: "",
             prototype: protoObj
         };
-        
-        // 연결 (라우팅)
-        struct.is = a_struct.is;
-        struct.extends = a_struct.extends;
-        struct.created = a_struct.created;
-        protoObj.createdCallback = function() {
-            // 쉐도우DOM 처리
-            // TODO : template 이외의 요소에 항목 포함
-            var elem = document.querySelector('#'+struct.is).content;
-            var shadow = this.createShadowRoot();
-            var clone = elem.cloneNode(true);
-            shadow.appendChild(clone);
-            // created 정의 되어 있을시
-            if (struct.created !== undefined) {
-                struct.created.call(this);
-            }
-        }
-        // regObject.extends = struct.extends ? struct.extends : ""; // 다른 구문방식
-        // TODO : 예외처리 해야함
-        if (struct.extends !== "" ) regObject.extends = struct.extends;
-        
-        
+
         // 사용자 요소 등록
-        document.registerElement(struct.is, regObject); 
-        // // 4. 쉐도우에 서크텀 붙이기
-        // // 커스텀 요소
-        // var XFooProto = Object.create(HTMLElement.prototype); 
-        // XFooProto.createdCallback = function() { 
-        //     this.innerHTML = "I'm an x-foo-mark!  보여~"; 
-        // }; 
-        // var XFoo = document.registerElement('x-foo-mark', {prototype: XFooProto}); 
-        // // 쉐도우에 붙이기
-        // var shadow = document.querySelector('#nameTag').createShadowRoot();
-        // var elem = document.createElement('x-foo-mark');
-        // shadow.appendChild(elem);  
-        console.log('_Polyinner');
+        document.registerElement(a_struct.is, regObject); 
+        
     }
+
     _Poly.prototype = {
         // 선택 & 이벤트     
         fire: function(type, detail, options) {},   // ➙ CustomEvent
@@ -183,15 +102,119 @@
             attachedCallback()
             arrayDelete(path, item) ➙ Array
         */
+
     };
-    _Poly.Class = function(struct) {}   // 등록없이 생성만
-    var a = new _Poly({
+
+    _Poly.Class = function(a_struct) {
+        console.log('_Poly.Class inner');
+        
+        var struct = { 
+            is: "",                     // 템플릿 is 이름 지정
+            extends: "",                // 기본 요소 확장
+            hostAttributes: "",         // 정적 속성                
+            // 속성 : type, value, reflectToAttribute, readOnly, notify, computed, observer
+            // 단방향 : [[]], 양방향 {{}}
+            properties: "",             // 속성
+            behavisors: "",             // 확장
+            listeners: "",              // 이벤트 매핑
+            
+            // Polymer.Base
+            customStyle: "",
+            domHost: "",
+                
+            // 라이프 사이클
+            created: function() {},             // createdCallback : 요소 생성후 속성 설정전, 1회호출
+            ready: function() {},               // 요소 생성후 속성 호출후, 1회호출
+            attached: function() {},            // attachedCallback : 여러번호출
+            attributeChanged: function() {},    // attributeChangedCallback : 속성값 변경시
+            detached: function() {},            // detachedCallback : 요소 분리 후 호출, 여러번호출
+                
+            // 생성자 
+            factoryImpl: function() {}
+        }
+        var LightDOM = {
+        /* listDOM 관련 메소드
+            // 자식 추가 및 삭제
+            Polymer.dom(parent).appendChild(node)
+            Polymer.dom(parent).insertBefore(node, beforeNode)
+            Polymer.dom(parent).removeChild(node)
+            Polymer.dom.flush()
+            // 부모 하위
+            Polymer.dom(parent).childNodes
+            Polymer.dom(parent).children
+            Polymer.dom(node).parentNode
+            Polymer.dom(node).firstChild
+            Polymer.dom(node).lastChild
+            Polymer.dom(node).firstElementChild
+            Polymer.dom(node).lastElementChild
+            Polymer.dom(node).previousSibling
+            Polymer.dom(node).nextSibling
+            Polymer.dom(node).textContent
+            Polymer.dom(node).innerHTML
+            // 퀴리 선택기
+            Polymer.dom(parent).querySelector(selector)
+            Polymer.dom(parent).querySelectorAll(selector)
+            // 콘텐츠 
+            Polymer.dom(contentElement).getDistributedNodes()
+            Polymer.dom(node).getDestinationInsertionPoints()
+            // 노드변경
+            Polymer.dom(node).setAttribute(attribute, value)
+            Polymer.dom(node).removeAttribute(attribute)
+            Polymer.dom(node).classList
+        */
+        }
+        var protoObj = Object.create(HTMLElement.prototype);
+
+        var regObject = {
+            extends: "",
+            prototype: protoObj
+        };
+        
+        // 연결 (라우팅)
+        // TODO : 예외처리 해야함
+        struct.is = a_struct.is;
+        struct.extends = a_struct.extends ? a_struct.extends : "";
+        struct.created = a_struct.created ? a_struct.created : "";
+
+        // regObject.extends = struct.extends ? struct.extends : ""; // 다른 구문방식
+        // TODO : 예외처리 해야함
+        if (struct.extends !== "" ) regObject.extends = struct.extends;
+
+        protoObj.createdCallback = function() {
+            // 쉐도우DOM 처리
+            // TODO : template 이외의 요소에 항목 포함
+            var elem = document.querySelector('#'+struct.is).content;
+            var shadow = this.createShadowRoot();
+            var clone = elem.cloneNode(true);
+            shadow.appendChild(clone);
+
+            // created 정의 되어 있을시
+            if (struct.created !== undefined) {
+                struct.created.call(this);
+            }
+        }
+        document.registerElement(a_struct.is, regObject); 
+        // return protoObj;
+    }   // 등록없이 생성만
+
+
+    // var a = new _Poly({
+    //     is: "configurable-name-tag",
+    //     // extends: "div" ,
+    //     created : function(){
+    //          this.innerHTML = " _Poly ";
+    //     }
+    // });
+
+
+    var a = _Poly.Class({
         is: "configurable-name-tag",
         // extends: "div" ,
         created : function(){
              this.innerHTML = " _Poly ";
         }
     });
+
 </script>
 
 <template id="configurable-name-tag">
