@@ -121,7 +121,8 @@
     });
     // document.body.appendChild(new XFoo()); 
     // g["XFooPrototype"] = XFooPrototype;
-    g.XFooPrototypes = XFooPrototype;         // 상속을 위해 전달할 항목
+    //g.XFooPrototypes =  XFooPrototype || {};  // 초기화 방법
+    g.XFooPrototypes =  XFooPrototype;          // 상속을 위해 전달할 항목
     g.XFoos = XFoo;
 
     }(window));
@@ -153,6 +154,7 @@
       console.log('foo2() called');
     };
 
+    // 요소 등록
     var XFoo = document.registerElement('x-xx-foo', {
             //'extends': 'my-button',
             // prototype: XFooPrototypes,
