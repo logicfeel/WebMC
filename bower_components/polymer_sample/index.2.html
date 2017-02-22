@@ -1,0 +1,152 @@
+<h2>요소정의 > 선언하기</h2>
+<script>
+// ##############################################
+(function(){    // 속성 선언
+    Polymer({
+
+        is: 'x-custom',
+
+        // @@ 속성 선언 부분
+        // @@ 속성특성 종류 : type, value, reflectToAttribute, readOnly, notify, computed, observer
+        properties: {
+                user: String,
+                isHappy: Boolean,
+                count: {
+                    type: Number,
+                    readOnly: true,
+                    notify: true
+                }
+        },
+
+        ready: function() {
+            this.textContent = 'Hello World, I am a Custom Element!';
+        }
+    });
+}());
+// ##############################################
+(function(){    // !! 속성 이름 매핑에 대한 속성 이름
+    Polymer({
+
+        is: 'x-custom',
+
+        properties: {
+            userName: String
+        }
+    });
+
+    // @@ 내부 카멜표기법 => '-'로 변환, 소문자로 변환
+    // x-custom user-name="Scott"></x-custom>    
+}());
+// ##############################################
+(function(){    // 특성 비 직렬화
+    Polymer({
+
+        is: 'x-custom',
+
+        properties: {
+            user: String,
+            manager: {
+                type: Boolean,
+                notify: true    // @@ 직렬화 선택 
+            }
+        },
+
+        attached: function() {
+        // render
+        this.textContent = 'Hello World, my user is ' + (this.user || 'nobody') + '.\n' +
+            'This user is ' + (this.manager ? '' : 'not') + ' a manager.';
+        }
+
+        // <x-custom user="Scott" manager></x-custom>
+        // <!--
+        // <x-custom>'s text content becomes:
+        // Hello World, my user is Scott.
+        // This user is a manager.
+        // -->
+    });   
+// ==============================================
+    Polymer({
+
+        is: 'x-custom',
+
+        properties: {
+            userName: String
+        }
+    });
+
+    // <x-custom user-name="Scott"></x-custom>
+    // <!-- Sets <x-custom>.userName = 'Scott';  -->
+}());
+// ##############################################
+(function(){    // 기본 속성 값 구성
+    Polymer({
+
+    is: 'x-custom',
+
+    properties: {
+        mode: {
+            type: String,
+            value: 'auto'   // @@ 고정값 
+        },
+        data: {
+            type: Object,
+            notify: true,
+            value: function() { return {}; }    // @@ 함수 지정 가능
+        }
+
+    }
+
+    });    
+}());
+// ##############################################
+(function(){    // 속성 변경 알림 이벤트 (알림)
+
+    // - 속성설정을  notify: true
+    // - property-name-changed
+    // - addEventListener ?
+
+}());
+// ##############################################
+(function(){    // 읽기 전용 속성
+    Polymer({
+
+        properties: {
+            response: {
+                    type: Object,
+                    readOnly: true, // @@ 읽기 전용
+                    notify: true
+            }
+        },
+
+        responseHandler: function(response) {
+        this._setResponse(response);
+        }
+
+    });    
+}());
+// ##############################################
+(function(){    // 특성에 특성 반영 (속성 직렬화)
+    Polymer({
+
+        properties: {
+            response: {
+                type: Object,
+                reflectToAttribute: true    // @@ 속성에 속성값 동기화
+            }
+        },
+
+        responseHandler: function(response) {
+            this.response = 'loaded';
+            // results in this.setAttribute('response', 'loaded');
+        }
+
+        // 속성 직렬화
+        // - String. 직렬화가 필요하지 않습니다.
+        // - Date또는 Number. 를 사용하여 직렬화 toString.
+        // - Boolean. 값이없는 속성의 결과가 set ( true) 또는 removed ( false)가됩니다.
+        // - Array또는 Object. 를 사용하여 직렬화 JSON.stringify.
+    });    
+}());
+// ##############################################
+
+</script>
