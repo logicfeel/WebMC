@@ -1,14 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>List </title>
-    <meta charset="utf-8">
-    <script src="/bower_components/webcomponentsjs/webcomponents.js"></script>
-    <!--<script src="jquery.js"></script>-->
-    <script>
-    </script>
-</head>
-<body>
 
 <script>
     /*
@@ -96,10 +85,18 @@
         struct.extends = a_struct.extends;
         struct.created = a_struct.created;
         protoObj.createdCallback = function() {
+            
+            var link = document.querySelector('link[rel="import"]');
+            var content = link.import;
+            
             // 쉐도우DOM 처리
             // TODO : template 이외의 요소에 항목 포함
-            var elem = document.querySelector('#'+struct.is).content;
+            // REVIEW : 파일 분리시  !!
+            // var elem = document.querySelector('#'+struct.is).content;   
+            var elem = content.querySelector('#'+struct.is).content;   
             var shadow = this.createShadowRoot();
+            // var shadow = this.attachShadow({mode: 'open'});
+                
             var clone = elem.cloneNode(true);
             shadow.appendChild(clone);
             // created 정의 되어 있을시
@@ -205,11 +202,13 @@
 
 </script>
 
+
 <template id="configurable-name-tag">
     <style>
     *, section {
         box-sizing: border-box;
         background-color: cornflowerblue;
+        font-style: italic;
     }
     table {
         border-collapse: collapse;
@@ -290,7 +289,7 @@
     <!-- bind to the "owner" property -->
     <span>
         This is <b>{{owner}}</b>'s configurable-name-tag element.
-    </spanp>
+    </span>
     <table>
     <thead>
     <tr><th></th><th>Chrome</th><th>Firefox</th><th>IE&nbsp;11+/Edge</th><th>Safari 7+</th><th>Chrome
@@ -336,11 +335,3 @@
 
 
 </template>
-
-<configurable-name-tag>configurable-name-tag</configurable-name-tag>
-
-<div is="configurable-name-tag">div is="configurable-name-tag"</div>
-
-<p>커스텀요소 외부</p>
-</body>
-</html>
